@@ -573,6 +573,11 @@ class postgresql (
 
   ### Service monitoring, if enabled ( monitor => true )
   if $postgresql::bool_monitor == true {
+
+    if ($monitor_tool =~ /munin/) {
+      package { 'libdbd-pg-perl':}
+    }
+
     monitor::port { "postgresql_${postgresql::protocol}_${postgresql::port}":
       protocol => $postgresql::protocol,
       port     => $postgresql::port,
